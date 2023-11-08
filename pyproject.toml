@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "starlette-flask"
 dynamic = ["version"]
-description = 'Starlette Flask'
+description = 'Session Middleware for Starlette/FastAPI Applications based on Flask Session Decoding and Encoding'
 readme = "README.md"
 # TODO: Update Python version
 requires-python = ">=3.7"

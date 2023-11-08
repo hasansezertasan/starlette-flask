@@ -5,6 +5,8 @@
 
 -----
 
+Session Middleware for Starlette/FastAPI Applications based on Flask Session Decoding and Encoding
+
 **Table of Contents**
 
 - [starlette-flask](#starlette-flask)
