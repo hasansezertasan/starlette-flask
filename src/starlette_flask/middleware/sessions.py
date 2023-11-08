@@ -43,7 +43,7 @@ class FlaskSigner:
         return self.serializer.loads(signed_value)
 
 
-class FlaskSessionMiddleware:
+class SessionMiddleware:
     def __init__(
         self,
         app: ASGIApp,
