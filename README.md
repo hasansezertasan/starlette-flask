@@ -26,7 +26,7 @@ I was migrating from [Flask] to [FastAPI] and I found out that I could mount a [
 
 So I mounted the thing...
 
-There was a problem: I wasn't able to share and CRUD the session data between [Flask] Application and [FastAPI] application, so i started this [discussion](https://github.com/tiangolo/fastapi/discussions/9318) in the [FastAPI] repository. Back then I wasn't able to solve this problem, so I decided not to use [Flask] Login and [Flask] Admin anymore.
+There was a problem: I wasn't able to share and CRUD the session data between [Flask] Application and [FastAPI] application, so i started this [discussion](https://github.com/tiangolo/fastapi/discussions/9318) in the [FastAPI] repository. Back then I wasn't able to solve this problem, so I decided not to use [Flask Login] and [Flask] Admin anymore.
 
 But you can see that the discussion didn't get any answers from march to september. It bothered me, so I decided to solve it myself. I took a look at the source code of [Flask] and [Starlette]. They used different methods to sign the session data, that was the problem... I decided to implement a custom `SessionMiddleware` that uses the same method as [Flask] to sign the session data. And it worked!
 
