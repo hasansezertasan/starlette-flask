@@ -8,40 +8,6 @@ from starlette.datastructures import MutableHeaders, Secret
 from starlette.requests import HTTPConnection
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
-if sys.version_info >= (3, 8):  # pragma: no cover
-    from typing import Literal
-else:  # pragma: no cover
-    from typing_extensions import Literal
-
-
-class FlaskSigner:
-    def __init__(
-        self,
-        secret_key: Union[str, bytes],
-        salt: bytes = b"cookie-session",
-        signer_kwargs: dict = {
-            "key_derivation": "hmac",
-            "digest_method": sha1,
-        },
-    ) -> None:
-        self.serializer = URLSafeTimedSerializer(
-            secret_key=secret_key if isinstance(secret_key, bytes) else secret_key.encode("utf-8"),
-            salt=salt,
-            signer_kwargs=signer_kwargs,
-        )
-
-    def sign(
-        self,
-        value: Union[str, bytes],
-    ) -> str:
-        return self.serializer.dumps(value)
-
-    def unsign(
-        self,
-        signed_value: Union[str, bytes],
-    ):
-        return self.serializer.loads(signed_value)
-
 
 class SessionMiddleware:
     def __init__(
