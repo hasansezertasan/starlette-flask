@@ -8,6 +8,7 @@ from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 
 class SessionMiddleware:
+    """Starlette middleware adopting Flask's cookie-based sessions."""
     def __init__(
         self,
         app: ASGIApp,
