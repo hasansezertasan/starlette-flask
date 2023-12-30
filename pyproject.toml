@@ -5,92 +5,71 @@ build-backend = "hatchling.build"
 [project]
 name = "starlette-flask"
 dynamic = ["version"]
-description = 'Session Middleware for Starlette/FastAPI Applications based on Flask Session Decoding and Encoding'
+description = 'Session Middleware for Starlette/FastAPI Applications based on Flask Session Decoding and Encoding.'
 readme = "README.md"
-# TODO: Update Python version
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 license = "MIT"
 # TODO: Update keywords
-keywords = []
-authors = [
-  { name = "hasansezertasan", email = "hasansezertasan@gmail.com" },
-]
+keywords = ["fastapi", "starlette", "flask", "session", "cookie", "asgi"]
+authors = [{ name = "hasansezertasan", email = "hasansezertasan@gmail.com" }]
 maintainers = [
   { name = "hasansezertasan", email = "hasansezertasan@gmail.com" },
 ]
 # TODO: Update classifiers
 classifiers = [
   "Development Status :: 4 - Beta",
-  "License :: OSI Approved :: MIT License",
-  'Environment :: Console',
+  "Topic :: Internet",
   "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Internet :: WWW/HTTP :: Session",
+  "Topic :: Internet :: WWW/HTTP :: WSGI",
+  "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "License :: OSI Approved :: MIT License",
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
   "Typing :: Typed",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Framework :: Flask",
+  "Framework :: FastAPI",
+  'Environment :: Web Environment',
 ]
-dependencies = [
-  "flask",
-  "starlette",
-]
+dependencies = ["starlette"]
 
 [project.urls]
 Documentation = "https://github.com/hasansezertasan/starlette-flask#readme"
 Issues = "https://github.com/hasansezertasan/starlette-flask/issues"
 Source = "https://github.com/hasansezertasan/starlette-flask"
+Changelog = "https://github.com/hasansezertasan/starlette-flask/CHANGELOG.md"
 
 [tool.hatch.version]
 path = "src/starlette_flask/__about__.py"
 
 [tool.hatch.envs.default]
-dependencies = [
-  "coverage[toml]>=6.5",
-  "pytest",
-]
+dependencies = ["coverage[toml]>=6.5", "pytest", "fastapi[all]", "flask", "a2wsgi"]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
-cov-report = [
-  "- coverage combine",
-  "coverage report",
-]
-cov = [
-  "test-cov",
-  "cov-report",
-]
+cov-report = ["- coverage combine", "coverage report"]
+cov = ["test-cov", "cov-report"]
 
 [[tool.hatch.envs.all.matrix]]
-python = ["3.7", "3.8", "3.9", "3.10", "3.11"]
+python = ["3.8", "3.9", "3.10", "3.11"]
 
 [tool.hatch.envs.lint]
 detached = true
-dependencies = [
-  "black>=23.1.0",
-  "mypy>=1.0.0",
-  "ruff>=0.0.243",
-]
+dependencies = ["black>=23.1.0", "mypy>=1.0.0", "ruff>=0.0.243"]
 [tool.hatch.envs.lint.scripts]
-typing = "mypy --install-types --non-interactive {args:src/auto_backup tests}"
-style = [
-  "ruff {args:.}",
-  "black --check --diff {args:.}",
-]
-fmt = [
-  "black {args:.}",
-  "ruff --fix {args:.}",
-  "style",
-]
-all = [
-  "style",
-  "typing",
-]
+typing = "mypy --install-types --non-interactive {args:src/starlette_flask tests}"
+style = ["ruff {args:.}", "black --check --diff {args:.}"]
+fmt = ["black {args:.}", "ruff --fix {args:.}", "style"]
+all = ["style", "typing"]
 
 [tool.hatch.envs.docs]
 detached = true
@@ -103,17 +82,17 @@ dependencies = [
 
 [tool.hatch.envs.docs.scripts]
 build = [
-  "pdoc --html --output-dir site --force src/auto_backup",
+  "pdoc --html --output-dir site --force src/starlette_flask",
   "mkdocs build",
 ]
 
 [tool.black]
-target-version = ["py37"]
+target-version = ["py38"]
 line-length = 120
 skip-string-normalization = true
 
 [tool.ruff]
-target-version = "py37"
+target-version = "py38"
 line-length = 120
 select = [
   "A",
@@ -148,9 +127,15 @@ ignore = [
   # Allow boolean positional values in function calls, like `dict.get(... True)`
   "FBT003",
   # Ignore checks for possible passwords
-  "S105", "S106", "S107",
+  "S105",
+  "S106",
+  "S107",
   # Ignore complexity
-  "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
+  "C901",
+  "PLR0911",
+  "PLR0912",
+  "PLR0913",
+  "PLR0915",
 ]
 unfixable = [
   # Don't touch unused imports
@@ -171,17 +156,14 @@ ban-relative-imports = "all"
 source_pkgs = ["starlette_flask", "tests"]
 branch = true
 parallel = true
-omit = [
-  "src/starlette_flask/__about__.py",
-]
+omit = ["src/starlette_flask/__about__.py"]
 
 [tool.coverage.paths]
-starlette_flask = ["src/starlette_flask", "*/starlette-flask/src/starlette_flask"]
+starlette_flask = [
+  "src/starlette_flask",
+  "*/starlette-flask/src/starlette_flask",
+]
 tests = ["tests", "*/starlette-flask/tests"]
 
 [tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
+exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
