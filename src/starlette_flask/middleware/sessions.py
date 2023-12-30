@@ -9,6 +9,7 @@ from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 class SessionMiddleware:
     """Starlette middleware adopting Flask's cookie-based sessions."""
+
     def __init__(
         self,
         app: ASGIApp,
@@ -20,10 +21,7 @@ class SessionMiddleware:
         https_only: bool = False,
         domain: typing.Optional[str] = None,
         salt: bytes = b"cookie-session",
-        signer_kwargs: dict = {
-            "key_derivation": "hmac",
-            "digest_method": sha1,
-        },
+        signer_kwargs: typing.Union[dict, None] = None,
     ) -> None:
         self.app = app
         self.session_cookie = session_cookie
@@ -34,6 +32,11 @@ class SessionMiddleware:
             self.security_flags += "; secure"
         if domain is not None:
             self.security_flags += f"; domain={domain}"
+        if not signer_kwargs:
+            signer_kwargs = {
+                "key_derivation": "hmac",
+                "digest_method": sha1,
+            }
         self.serializer = URLSafeTimedSerializer(
             secret_key=secret_key if isinstance(secret_key, bytes) else secret_key.encode("utf-8"),
             salt=salt,
@@ -63,7 +66,6 @@ class SessionMiddleware:
             if message["type"] == "http.response.start":
                 headers = MutableHeaders(scope=message)
                 if not scope["session"]:
-                    print("Session is empty!")
                     # The session has been cleared.
                     headers = MutableHeaders(scope=message)
                     header_value = (
@@ -77,7 +79,6 @@ class SessionMiddleware:
                     )
                     headers.append("Set-Cookie", header_value)
                 elif scope["session"] != session_initial:
-                    print("Session is changed!")
                     # Session data is changed - We have session data to persist.
                     data = self.serializer.dumps(scope["session"])
                     headers = MutableHeaders(scope=message)
@@ -91,8 +92,6 @@ class SessionMiddleware:
                         )
                     )
                     headers.append("Set-Cookie", header_value)
-                else:
-                    print("Session is not changed!")
             await send(message)
 
         await self.app(scope, receive, send_wrapper)
