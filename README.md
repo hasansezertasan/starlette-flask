@@ -40,6 +40,8 @@ Here are some related discussions/issues/pull requests:
 - [SessionMiddleware may create malformed cookie · Issue #1259 · encode/starlette](https://github.com/encode/starlette/issues/1259)
 - [Added `allow_path_regex` to the `SessionMiddleware` by hasansezertasan · Pull Request #2316 · encode/starlette](https://github.com/encode/starlette/pull/2316)
 
+Here is another related project: [volfpeter/fastapi-flask-auth: Lightweight FastAPI dependencies and authenticator that uses Flask session cookies for access control](https://github.com/volfpeter/fastapi-flask-auth). This project actually inspired me to build `starlette-flask`.
+
 Check out [Middleware - Starlette](https://www.starlette.io/middleware/) page to learn more about middlewares in [Starlette].
 
 ## Real World Example
