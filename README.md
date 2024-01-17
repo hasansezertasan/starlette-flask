@@ -7,44 +7,24 @@
 
 Session Middleware for Starlette/FastAPI Applications based on Flask Session Decoding and Encoding.
 
-**Table of Contents**
+## Table of Contents
 
 - [starlette-flask](#starlette-flask)
+  - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
-  - [Story](#story)
-  - [Real World Example](#real-world-example)
+  - [Usage](#usage)
+  - [Motivation](#motivation)
+  - [Author](#author)
+  - [Disclaimer](#disclaimer)
   - [License](#license)
 
 ## Installation
 
-```console
+``` bash
 pip install starlette-flask
 ```
 
-## Story
-
-I was migrating from [Flask] to [FastAPI] and I found out that I could use my existing [Flask] applications with [FastAPI] (thanks to [a2wsgi]) application.
-
-> I must tell you this: Many of my [Flask] applications depend on third-party [Flask] extensions like [Flask Admin], [Flask Login], and [Flask-JWT-Extended]
-
-So I searched how to couple [Flask] and [FastAPI] and [found a way](https://fastapi.tiangolo.com/advanced/wsgi/#using-wsgimiddleware). But there was a problem... I wasn't able to access the session data between [Flask] and [FastAPI] applications. I mean I was able to CRUD session data on the [Flask] side and [FastAPI] side but I couldn't CRUD the session data inside [FastAPI] that was CRUDed by [Flask], so I started this [discussion](https://github.com/tiangolo/fastapi/discussions/9318) in the [FastAPI] repository. Back then I wasn't able to solve this, so I decided not to use [Flask Login] and [Flask Admin] anymore...
-
-But you can see that the discussion didn't get any answers from March to September. It was bothering me, so I decided to solve it myself. I took a look at the source code of [Flask] and [Starlette] (backend core of [FastAPI]). I found that they used different methods to sign the session data and [Starlette] kept re-signing the session data even if it wasn't created, updated, deleted, or even read, that was the problem... I needed a custom `SessionMiddleware` that uses the same method as [Flask] to sign the session data and I did implement it.
-
-Here are some related discussions/issues/pull requests:
-
-- [Sharing Session Data between Mounted Applications · tiangolo/fastapi · Discussion #9318](https://github.com/tiangolo/fastapi/discussions/9318)
-- [Use Base64Url encoding and decoding in Session Cookie by allezxandre · Pull Request #1922 · encode/starlette](https://github.com/encode/starlette/pull/1922)
-- [SessionMiddleware sends a new set-cookie for every request, with unintended results · Issue #2019 · encode/starlette](https://github.com/encode/starlette/issues/2019)
-- [Create More Flexable SessionMiddleware · encode/starlette · Discussion #2256](https://github.com/encode/starlette/discussions/2256)
-- [SessionMiddleware may create malformed cookie · Issue #1259 · encode/starlette](https://github.com/encode/starlette/issues/1259)
-- [Added `allow_path_regex` to the `SessionMiddleware` by hasansezertasan · Pull Request #2316 · encode/starlette](https://github.com/encode/starlette/pull/2316)
-
-Here is another related project: [volfpeter/fastapi-flask-auth: Lightweight FastAPI dependencies and authenticator that uses Flask session cookies for access control](https://github.com/volfpeter/fastapi-flask-auth). This project actually inspired me to build `starlette-flask`.
-
-Check out [Middleware - Starlette](https://www.starlette.io/middleware/) page to learn more about middlewares in [Starlette].
-
-## Real World Example
+## Usage
 
 So what's the problem? Let's say you have a [Flask] application and it was live for a long time. You want to migrate to [FastAPI] but you don't want your users to lose their session data. And to be honest, migrating is not an easy process. You might want to take it slow and get the benefit of FastAPI features like mounting an application to another application.
 
@@ -100,7 +80,7 @@ def after_request(response):
 fastapi_application = FastAPI()
 fastapi_application.add_middleware(
     SessionMiddleware,
-    secret_key="super-secret",
+    secret_key=secret_key,
 )
 
 
@@ -150,6 +130,39 @@ All you need to do is this:
 - from starlette.middleware.sessions import SessionMiddleware
 + from starlette_flask.middleware.sessions import SessionMiddleware
 ```
+
+## Motivation
+
+I was migrating from [Flask] to [FastAPI] and I found out that I could use my existing [Flask] applications with [FastAPI] (thanks to [a2wsgi]) application.
+
+> I must tell you this: Many of my [Flask] applications depend on third-party [Flask] extensions like [Flask Admin], [Flask Login], and [Flask-JWT-Extended]
+
+So I searched how to couple [Flask] and [FastAPI] and [found a way](https://fastapi.tiangolo.com/advanced/wsgi/#using-wsgimiddleware). But there was a problem... I wasn't able to access the session data between [Flask] and [FastAPI] applications. I mean I was able to CRUD session data on the [Flask] side and [FastAPI] side but I couldn't CRUD the session data inside [FastAPI] that was CRUDed by [Flask], so I started this [discussion](https://github.com/tiangolo/fastapi/discussions/9318) in the [FastAPI] repository. Back then I wasn't able to solve this, so I decided not to use [Flask Login] and [Flask Admin] anymore...
+
+But you can see that the discussion didn't get any answers from March to September. It was bothering me, so I decided to solve it myself. I took a look at the source code of [Flask] and [Starlette] (backend core of [FastAPI]). I found that they used different methods to sign the session data and [Starlette] kept re-signing the session data even if it wasn't created, updated, deleted, or even read, that was the problem... I needed a custom `SessionMiddleware` that uses the same method as [Flask] to sign the session data and I did implement it.
+
+Here are some related discussions/issues/pull requests:
+
+- [Sharing Session Data between Mounted Applications · tiangolo/fastapi · Discussion #9318](https://github.com/tiangolo/fastapi/discussions/9318)
+- [Use Base64Url encoding and decoding in Session Cookie by allezxandre · Pull Request #1922 · encode/starlette](https://github.com/encode/starlette/pull/1922)
+- [SessionMiddleware sends a new set-cookie for every request, with unintended results · Issue #2019 · encode/starlette](https://github.com/encode/starlette/issues/2019)
+- [Create More Flexable SessionMiddleware · encode/starlette · Discussion #2256](https://github.com/encode/starlette/discussions/2256)
+- [SessionMiddleware may create malformed cookie · Issue #1259 · encode/starlette](https://github.com/encode/starlette/issues/1259)
+- [Added `allow_path_regex` to the `SessionMiddleware` by hasansezertasan · Pull Request #2316 · encode/starlette](https://github.com/encode/starlette/pull/2316)
+
+Here is another related project: [volfpeter/fastapi-flask-auth: Lightweight FastAPI dependencies and authenticator that uses Flask session cookies for access control](https://github.com/volfpeter/fastapi-flask-auth). This project actually inspired me to build `starlette-flask`.
+
+Check out [Middleware - Starlette](https://www.starlette.io/middleware/) page to learn more about middlewares in [Starlette].
+
+## Author
+
+- [Hasan Sezer Tasan](https://www.github.com/hasansezertasan), It's me :wave:
+
+## Disclaimer
+
+**I am not a security expert.** I just wanted to share my solution to this problem. If you have any suggestions, please open an issue or a pull request.
+
+> There are also some issues and discussions about problems with the default `SessionMiddleware` that comes with [Starlette]. I believe my implementation is not perfect but either [Starlette] but either the default `SessionMiddleware` that comes with [Starlette].
 
 ## License
 
