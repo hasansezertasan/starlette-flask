@@ -1,7 +1,15 @@
 # starlette-flask
 
+[![CI](https://github.com/hasansezertasan/starlette-flask/actions/workflows/ci.yml/badge.svg)](https://github.com/hasansezertasan/starlette-flask/actions?query=event%3Apush+branch%3Amain+workflow%3ACI)
+[![Coverage](https://img.shields.io/codecov/c/github/hasansezertasan/starlette-flask)](https://codecov.io/gh/hasansezertasan/starlette-flask)
 [![PyPI - Version](https://img.shields.io/pypi/v/starlette-flask.svg)](https://pypi.org/project/starlette-flask)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/starlette-flask.svg)](https://pypi.org/project/starlette-flask)
+[![License](https://img.shields.io/github/license/hasansezertasan/starlette-flask.svg)](https://github.com/hasansezertasan/starlette-flask/blob/main/LICENSE)
+[![Latest Commit](https://img.shields.io/github/last-commit/hasansezertasan/starlette-flask)](https://github.com/hasansezertasan/starlette-flask)
+
+[![Downloads](https://pepy.tech/badge/starlette-flask)](https://pepy.tech/project/starlette-flask)
+[![Downloads/Month](https://pepy.tech/badge/starlette-flask/month)](https://pepy.tech/project/starlette-flask)
+[![Downloads/Week](https://pepy.tech/badge/starlette-flask/week)](https://pepy.tech/project/starlette-flask)
 
 -----
 
