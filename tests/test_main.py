@@ -8,14 +8,13 @@ from starlette_flask.middleware.sessions import SessionMiddleware
 
 secret_key = "super-secret"
 
-
+# Flask Application
 flask_app = Flask(__name__)
 flask_app.config["SECRET_KEY"] = secret_key
+
+# FastAPI Application
 fastapi_application = FastAPI()
-fastapi_application.add_middleware(
-    SessionMiddleware,
-    secret_key="super-secret",
-)
+fastapi_application.add_middleware(SessionMiddleware, secret_key="super-secret")
 
 
 @flask_app.get("/set-session")
@@ -54,7 +53,9 @@ async def starlette_delete_session(request: Request):
     return {"message": "Session deleted"}
 
 
+# Main FastAPI Application
 app = FastAPI()
+# Mount Sub Applications
 app.mount("/flask-application", WSGIMiddleware(flask_app))
 app.mount("/fastapi-application", fastapi_application)
 
