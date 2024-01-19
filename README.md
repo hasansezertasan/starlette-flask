@@ -170,7 +170,7 @@ Check out [Middleware - Starlette](https://www.starlette.io/middleware/) page to
 
 **I am not a security expert.** I just wanted to share my solution to this problem. If you have any suggestions, please open an issue or a pull request.
 
-> There are also some issues and discussions about problems with the default `SessionMiddleware` that comes with [Starlette]. I believe my implementation is not perfect but either [Starlette] but either the default `SessionMiddleware` that comes with [Starlette].
+> There are also some issues and discussions about problems with the default `SessionMiddleware` that comes with [Starlette]. I believe my implementation is not perfect but either the default `SessionMiddleware` that comes with [Starlette].
 
 ## License
 
