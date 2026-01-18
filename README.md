@@ -38,7 +38,13 @@ So what's the problem? Let's say you have a [Flask] application and it was live 
 
 Let's try to mount a [Flask] application to a [FastAPI] application.
 
+<!-- script-name:example.py -->
 ```python
+# /// script
+# requires-python = ">=3.8"
+# dependencies = []
+# ///
+
 from fastapi import FastAPI, Request, Response
 from flask import Flask, jsonify, session, request
 from starlette.middleware.sessions import SessionMiddleware
