@@ -44,7 +44,7 @@ The author revisited the project after a period of inactivity and evaluated whet
 2. **AI advancement makes the package redundant.** The middleware is ~100 lines. Any modern coding agent can generate it given the problem description and Flask's signing internals (`itsdangerous.URLSafeTimedSerializer` with `key_derivation="hmac"`, `digest_method=sha1`, `salt=b"cookie-session"`).
 3. **The whenwords-style approach (Option B) was considered but dismissed** because the middleware is Python-specific and framework-specific - there's only one real implementation target, unlike language-agnostic utilities.
 4. **Option C (blog post) remains open** as a future possibility but is not required for archival.
-5. **Low usage means minimal disruption.** ~100 monthly downloads and 2 dependents means archiving won't break significant projects.
+5. **Low usage means minimal disruption.** ~100 monthly downloads and 2 dependents mean archiving won't break significant projects.
 
 ### Actions Taken
 
