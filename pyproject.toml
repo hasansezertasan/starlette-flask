@@ -9,50 +9,54 @@ description = 'Session Middleware for Starlette/FastAPI Applications based on Fl
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
-# TODO: Update keywords
 keywords = ["fastapi", "starlette", "flask", "session", "cookie", "asgi"]
 authors = [{ name = "hasansezertasan", email = "hasansezertasan@gmail.com" }]
 maintainers = [
   { name = "hasansezertasan", email = "hasansezertasan@gmail.com" },
 ]
-# TODO: Update classifiers
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Topic :: Internet",
-  "Topic :: Software Development :: Libraries :: Python Modules",
-  "Topic :: Internet :: WWW/HTTP :: Session",
-  "Topic :: Internet :: WWW/HTTP :: WSGI",
-  "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
-  "Topic :: Software Development :: Libraries :: Application Frameworks",
-  "License :: OSI Approved :: MIT License",
+  'Environment :: Web Environment',
+  "Development Status :: 7 - Inactive",
+  "Framework :: FastAPI",
+  "Framework :: Flask",
   "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
-  "Typing :: Typed",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "Framework :: Flask",
-  "Framework :: FastAPI",
-  'Environment :: Web Environment',
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python",
+  "Topic :: Internet :: WWW/HTTP :: Session",
+  "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+  "Topic :: Internet :: WWW/HTTP :: WSGI",
+  "Topic :: Internet",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Typing :: Typed",
 ]
 dependencies = ["starlette"]
 
 [project.urls]
+Changelog = "https://github.com/hasansezertasan/starlette-flask/releases"
 Documentation = "https://github.com/hasansezertasan/starlette-flask#readme"
 Issues = "https://github.com/hasansezertasan/starlette-flask/issues"
 Source = "https://github.com/hasansezertasan/starlette-flask"
-Changelog = "https://github.com/hasansezertasan/starlette-flask/CHANGELOG.md"
 
 [tool.hatch.version]
 path = "src/starlette_flask/__about__.py"
 
 [tool.hatch.envs.default]
-dependencies = ["coverage[toml]>=6.5", "pytest", "fastapi[all]", "flask", "a2wsgi"]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+  "fastapi[all]",
+  "flask",
+  "a2wsgi",
+]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
