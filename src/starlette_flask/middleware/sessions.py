@@ -68,28 +68,24 @@ class SessionMiddleware:
                 if not scope["session"]:
                     # The session has been cleared.
                     headers = MutableHeaders(scope=message)
-                    header_value = (
-                        "{session_cookie}={data}; path={path}; {expires}{security_flags}".format(  # noqa E501
-                            session_cookie=self.session_cookie,
-                            data="null",
-                            path=self.path,
-                            expires="expires=Thu, 01 Jan 1970 00:00:00 GMT; ",
-                            security_flags=self.security_flags,
-                        )
+                    header_value = "{session_cookie}={data}; path={path}; {expires}{security_flags}".format(
+                        session_cookie=self.session_cookie,
+                        data="null",
+                        path=self.path,
+                        expires="expires=Thu, 01 Jan 1970 00:00:00 GMT; ",
+                        security_flags=self.security_flags,
                     )
                     headers.append("Set-Cookie", header_value)
                 elif scope["session"] != session_initial:
                     # Session data is changed - We have session data to persist.
                     data = self.serializer.dumps(scope["session"])
                     headers = MutableHeaders(scope=message)
-                    header_value = (
-                        "{session_cookie}={data}; path={path}; {max_age}{security_flags}".format(  # noqa E501
-                            session_cookie=self.session_cookie,
-                            data=data,
-                            path=self.path,
-                            max_age=f"Max-Age={self.max_age}; " if self.max_age else "",
-                            security_flags=self.security_flags,
-                        )
+                    header_value = "{session_cookie}={data}; path={path}; {max_age}{security_flags}".format(
+                        session_cookie=self.session_cookie,
+                        data=data,
+                        path=self.path,
+                        max_age=f"Max-Age={self.max_age}; " if self.max_age else "",
+                        security_flags=self.security_flags,
                     )
                     headers.append("Set-Cookie", header_value)
             await send(message)

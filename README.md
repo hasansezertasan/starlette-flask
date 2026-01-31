@@ -1,5 +1,7 @@
 # starlette-flask
 
+> **This project is archived.** It achieved its goal and is no longer actively maintained. The existing PyPI package (v0.0.1) remains installable. See [why this was archived](#why-archived) below.
+
 [![CI](https://github.com/hasansezertasan/starlette-flask/actions/workflows/ci.yml/badge.svg)](https://github.com/hasansezertasan/starlette-flask/actions?query=event%3Apush+branch%3Amain+workflow%3ACI)
 [![Coverage](https://img.shields.io/codecov/c/github/hasansezertasan/starlette-flask)](https://codecov.io/gh/hasansezertasan/starlette-flask)
 [![PyPI - Version](https://img.shields.io/pypi/v/starlette-flask.svg)](https://pypi.org/project/starlette-flask)
@@ -11,7 +13,7 @@
 [![Downloads/Month](https://pepy.tech/badge/starlette-flask/month)](https://pepy.tech/project/starlette-flask)
 [![Downloads/Week](https://pepy.tech/badge/starlette-flask/week)](https://pepy.tech/project/starlette-flask)
 
------
+---
 
 Session Middleware for Starlette/FastAPI Applications based on Flask Session Decoding and Encoding.
 
@@ -28,7 +30,7 @@ Session Middleware for Starlette/FastAPI Applications based on Flask Session Dec
 
 ## Installation
 
-``` bash
+```shell
 pip install starlette-flask
 ```
 
@@ -171,6 +173,22 @@ Check out [Middleware - Starlette](https://www.starlette.io/middleware/) page to
 **I am not a security expert.** I just wanted to share my solution to this problem. If you have any suggestions, please open an issue or a pull request.
 
 > There are also some issues and discussions about problems with the default `SessionMiddleware` that comes with [Starlette]. I believe my implementation is not perfect but either the default `SessionMiddleware` that comes with [Starlette].
+
+## Why Archived
+
+This project is archived as of January 2026. The reasons:
+
+1. **Goal achieved.** The middleware works and the session interoperability problem is solved.
+2. **The knowledge matters more than the package.** The core insight is that Flask signs session cookies using `itsdangerous.URLSafeTimedSerializer` with `key_derivation="hmac"`, `digest_method=hashlib.sha1`, and `salt=b"cookie-session"`. Starlette uses a different signing method. Additionally, Starlette's default `SessionMiddleware` re-signs the cookie on every request, even when session data hasn't changed, overwriting Flask's cookies.
+3. **AI can generate this.** The middleware is ~100 lines. Given the problem description above, any coding agent can produce an equivalent implementation tailored to your needs.
+
+If you need this functionality, you can:
+
+- Install the existing package: `pip install starlette-flask` (v0.0.1, still on PyPI)
+- Copy the middleware from [`src/starlette_flask/middleware/sessions.py`](src/starlette_flask/middleware/sessions.py) into your project
+- Ask an AI coding assistant to generate a Flask-compatible session middleware for Starlette using the signing details above
+
+See [ADR-001](docs/decisions/001-archive-project.md) for the full decision record.
 
 ## License
 
